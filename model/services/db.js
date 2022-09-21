@@ -9,10 +9,19 @@ async function connect(){
     return connection
 }
 
-// BUSCAR NA TABELA USUARIO
+// BUSCAR NA TABELA USUÁRIO
 async function selectUsuario(){
     const conn = await connect()
     const [rows] = await conn.query('SELECT * FROM usuario;')
     return rows
 }
 module.exports = {selectUsuario}
+
+// INSERIR NA TABELA USUÁRIO
+async function insertUsuario(usuario){
+    const conn = await connect()
+    const sql = 'INSERT INTO usuario(nome, senha) VALUES (?, ?);'
+    const values = [usuario.nome, usuario.senha]
+    return await conn.query(sql, values)
+}
+module.exports = {insertUsuario}
