@@ -15,7 +15,6 @@ async function selectUsuario(){
     const [rows] = await conn.query('SELECT * FROM usuario;')
     return rows
 }
-module.exports = {selectUsuario}
 
 // INSERIR NA TABELA USUÁRIO
 async function insertUsuario(usuario){
@@ -24,4 +23,20 @@ async function insertUsuario(usuario){
     const values = [usuario.nome, usuario.senha]
     return await conn.query(sql, values)
 }
-module.exports = {insertUsuario}
+
+// DELETAR DA TABELA USUÁRIO
+async function deleteUsuario(id){
+    const conn = await connect()
+    const sql = 'DELETE FROM usuario WHERE id=?;'
+    return await conn.query(sql, [id])
+}
+
+// ATUALIZAR NA TABELA USUÁRIO
+async function updateUsuario(id, usuario){
+    const conn = await connect()
+    const sql = 'UPDATE usuario SET nome=?, senha=? WHERE id=?'
+    const values = [usuario.nome, usuario.senha, id]
+    return await conn.query(sql, values)
+}
+
+module.exports = {selectUsuario, insertUsuario, deleteUsuario}
